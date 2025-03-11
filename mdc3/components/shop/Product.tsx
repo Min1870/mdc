@@ -37,6 +37,7 @@ export default function Product({
   onCallRoute,
 }: ProductTypes) {
   const [fill, setFill] = useState(false);
+  console.log("---------------- Rendering Product -------------------", id);
 
   return (
     <Pressable className="flex-1" onPress={() => onCallRoute(id)}>

@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { Image } from "expo-image";
+import { memo } from "react";
 
 const blurhash =
   "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
@@ -14,13 +15,14 @@ type CategoryProps = {
   select: number;
 };
 
-export default function Category({
+ function Category({
   id,
   name,
   image,
   onSelect,
   select,
 }: CategoryProps) {
+  console.log("---------------- Rendering Category -------------------", id);
   return (
     <Pressable onPress={() => onSelect(id)}>
       <Card className="items-center">
@@ -45,3 +47,5 @@ export default function Category({
     </Pressable>
   );
 }
+
+export default memo(Category)

@@ -1,17 +1,14 @@
 import { Button, ButtonText } from "@/components/ui/button";
 import {
   FormControl,
-  FormControlError,
-  FormControlErrorIcon,
-  FormControlErrorText,
   FormControlHelper,
   FormControlHelperText,
   FormControlLabel,
-  FormControlLabelText,
+  FormControlLabelText
 } from "@/components/ui/form-control";
 import { Heading } from "@/components/ui/heading";
 import { HStack } from "@/components/ui/hstack";
-import { AlertCircleIcon, EyeIcon, EyeOffIcon } from "@/components/ui/icon";
+import { EyeIcon, EyeOffIcon } from "@/components/ui/icon";
 import { Image } from "@/components/ui/image";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
@@ -22,6 +19,12 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+export type FormStateProps = {
+  phone: string;
+  password: string;
+};
+
 export default function SignIn() {
   const { signIn } = useSession();
 
@@ -40,8 +43,8 @@ export default function SignIn() {
       password: "",
     },
   });
-  const onSubmit = (formState: any) => {
-    signIn();
+  const onSubmit = async (formState: FormStateProps) => {
+    await signIn(formState);
     router.replace("/");
   };
 

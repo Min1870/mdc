@@ -1,7 +1,7 @@
 import { sample } from "@/data";
 import { Image } from "expo-image";
 import { useFocusEffect } from "expo-router";
-import React, { useMemo, useCallback, useRef, useState } from "react";
+import React, { useMemo, useCallback, useRef, useState, memo } from "react";
 import { Animated, Dimensions, StyleSheet, Text, View } from "react-native";
 import PagerView, {
   PagerViewOnPageScrollEventData,
@@ -30,6 +30,8 @@ const Pagination = ({
     outputRange: [0, sample.length * DOT_SIZE],
   });
 
+  console.log("---------------- Rendering PagerView -------------------");
+
   return (
     <View style={[styles.pagination]}>
       <Animated.View
@@ -52,7 +54,7 @@ const Pagination = ({
   );
 };
 
-export default function PagerViewScreen() {
+ function PagerViewScreen() {
   const ref = React.useRef<PagerView>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const scrollOffsetAnimatedValue = React.useRef(new Animated.Value(0)).current;
@@ -123,6 +125,7 @@ export default function PagerViewScreen() {
     </View>
   );
 }
+export default memo(PagerViewScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -6,7 +6,6 @@ import { ShoppingCart } from "lucide-react-native";
 import { memo } from "react";
 
 function Cart() {
-  console.log("---------------- Rendering Cart Icon -------------------");
   return (
     <Box className="items-center">
       <VStack>

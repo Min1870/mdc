@@ -9,7 +9,6 @@ type TitleProps = {
 };
 
 const Title = ({ title, actionText }: TitleProps) => {
-  console.log("---------------- Rendering Title -------------------");
   return (
     <HStack className="items-center justify-between">
       <Text size="lg" className="font-medium text-black">

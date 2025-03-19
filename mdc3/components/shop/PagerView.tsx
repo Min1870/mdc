@@ -30,7 +30,6 @@ const Pagination = ({
     outputRange: [0, sample.length * DOT_SIZE],
   });
 
-  console.log("---------------- Rendering PagerView -------------------");
 
   return (
     <View style={[styles.pagination]}>

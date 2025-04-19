@@ -35,13 +35,14 @@ import { Pressable } from "@/components/ui/pressable";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
 import { products } from "@/data";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { CheckIcon, Heart, StarIcon } from "lucide-react-native";
 import React from "react";
 import { ScrollView } from "react-native";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/api/axios";
 import type { ProductType, CartItem, CartType } from "@/types";
+import useCartStore from "@/store/cartStore";
 
 type CartProps = {
   id: number;
@@ -57,6 +58,7 @@ const fetchProduct = async (productId: number): Promise<ProductType> => {
 
 const Detail = () => {
   const { id } = useLocalSearchParams();
+  const { addToCart } = useCartStore();
 
   const queryClient = useQueryClient();
 
@@ -128,7 +130,9 @@ const Detail = () => {
       handleToast("An error occurs", error.message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products", product?.categoryId] });
+      queryClient.invalidateQueries({
+        queryKey: ["products", product?.categoryId],
+      });
     },
   });
 
@@ -160,6 +164,22 @@ const Detail = () => {
         );
       },
     });
+  };
+
+  const addCartToStore = () => {
+    if (cart.length === 0) {
+      return handleToast("Cart is empty", "Please add items to cart");
+    }
+    const cartProduct = {
+      id: product?.id!,
+      title: product?.title!,
+      price: product?.price!,
+      image: product?.image,
+      items: cart,
+    };
+
+    addToCart(cartProduct);
+    router.back();
   };
 
   if (isLoading) {
@@ -368,12 +388,10 @@ const Detail = () => {
           </VStack>
         </ActionsheetContent>
       </Actionsheet>
-      <Box className="self-end">
-        <Fab size="md" className="bottom-8 bg-green-500">
+        <Fab size="md" placement="bottom right" className=" bg-green-500" onPress={addCartToStore}>
           <FabIcon size="md" as={AddIcon} />
           <FabLabel bold>Add To Cart</FabLabel>
         </Fab>
-      </Box>
     </VStack>
   );
 };
